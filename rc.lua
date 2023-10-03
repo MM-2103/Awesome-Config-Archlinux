@@ -13,12 +13,15 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
+-- Arc battery widget
+-- local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
+local battery_widget = require("battery-widget")
+local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
+local pacman_widget = require("awesome-wm-widgets.pacman-widget.pacman")
+-- local volume_widget = require('awesome-wm-widgets.pactl-widget.volume')
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
---Volume widget
-local volume_control = require("volume-control")
-volumecfg = volume_control({})
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -96,8 +99,8 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                         })
 
 
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
+-- mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
+ --                                    menu = mymainmenu })
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -204,7 +207,7 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            mylauncher,
+            --mylauncher,
             s.mytaglist,
             s.mypromptbox,
         },
@@ -212,11 +215,36 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
           --mykeyboardlayout,
-	    volumecfg.widget,
+	    pacman_widget(),
+	   -- volume_widget{
+           -- widget_type = 'arc'
+           -- },
+	    battery_widget {
+              ac = "ACAD",
+    	      adapter = "BAT1",
+              ac_prefix = "AC: ",
+              battery_prefix = "Bat: ",
+              percent_colors = {
+                 { 25, "red"   },
+                 { 50, "orange"},
+                 {999, "green" },
+             },
+            },
+	    wibox.widget.separator {
+	      orientation = "vertical",
+	      forced_width = 10,
+	    },
             wibox.widget.systray(),
             mytextclock,
+	    logout_menu_widget{
+            onlock = function() awful.spawn.with_shell('i3lock-fancy') end
+            },
+            wibox.widget.separator {
+	      orientation = "vertical",
+	      forced_width = 10,
+	    },
             s.mylayoutbox,
-        },
+	},
     }
 end)
 -- }}}
@@ -314,18 +342,36 @@ globalkeys = gears.table.join(
               end,
               {description = "restore minimized", group = "client"}),
 
-    -- Dmenu
+    -- Rofi
     awful.key({ modkey }, "r", function()
-	    awful.util.spawn("dmenu_run") end,
-              {description = "run dmenu", group = "launcher"}),
+	    awful.util.spawn("rofi -show drun") end,
+              {description = "run rofi", group = "launcher"}),
 
     -- FireFox
  awful.key({ modkey }, "b", function()
 	    awful.util.spawn("firefox") end,
               {description = "Launch FireFox", group = "applications"}),
 
+    -- VsCodium
+ awful.key({ modkey }, "c", function()
+	    awful.util.spawn("codium") end,
+              {description = "Launch VsCodium", group = "applications"}),
+
+
+    -- Emacs
+ awful.key({ modkey }, "e", function()
+	    awful.util.spawn("emacs") end,
+              {description = "Launch Doom Emacs", group = "applications"}),
+
+
+    -- Thunar
+ awful.key({ modkey }, "v", function()
+	    awful.util.spawn("thunar") end,
+              {description = "Launch Thunar", group = "applications"}),
+
+
     -- Steam
- awful.key({ modkey }, "2", function()
+ awful.key({ modkey }, "w", function()
 	    awful.util.spawn("steam") end,
               {description = "Launch steam", group = "applications"}),
 
@@ -545,6 +591,7 @@ client.connect_signal("request::titlebars", function(c)
         end)
     )
 
+
     awful.titlebar(c) : setup {
         { -- Left
             awful.titlebar.widget.iconwidget(c),
@@ -580,5 +627,8 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 --- Auto start applications
-
+--
+awful.spawn.with_shell("thunderbird", function(c)
+    c:move_to_tag(awful.screen.focused().tags[9])
+end)
 awful.spawn.with_shell("~/.config/awesome/autostart.sh")
