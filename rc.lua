@@ -352,6 +352,12 @@ globalkeys = gears.table.join(
 	    awful.util.spawn("firefox") end,
               {description = "Launch FireFox", group = "applications"}),
 
+    -- ST terminal
+ awful.key({ modkey }, "t", function()
+	    awful.util.spawn("st") end,
+              {description = "Launch ST terminal", group = "applications"}),
+
+
     -- VsCodium
  awful.key({ modkey }, "c", function()
 	    awful.util.spawn("codium") end,
