@@ -200,7 +200,7 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar({ position = "top", opacity = 0.7, screen = s })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -377,7 +377,7 @@ globalkeys = gears.table.join(
 
 
     -- Steam
- awful.key({ modkey }, "w", function()
+ awful.key({ modkey, "Shift" }, "w", function()
 	    awful.util.spawn("steam") end,
               {description = "Launch steam", group = "applications"}),
 
@@ -529,6 +529,10 @@ awful.rules.rules = {
      }
     },
 
+    { rule = { instance = "thunderbird" },
+      properties = { tag = "9" }
+    },
+
     -- Floating clients.
     { rule_any = {
         instance = {
@@ -637,7 +641,16 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 --- Auto start applications
 --
-awful.spawn.with_shell("thunderbird", function(c)
-    c:move_to_tag(awful.screen.focused().tags[9])
-end)
+awful.spawn.with_shell("thunderbird")
+
 awful.spawn.with_shell("~/.config/awesome/autostart.sh")
+
+-- Transparent background
+client.connect_signal("focus", function(c)
+                              c.border_color = beautiful.border_focus
+                              c.opacity = 1
+                           end)
+client.connect_signal("unfocus", function(c)
+                                c.border_color = beautiful.border_normal
+                                c.opacity = 0.9
+                             end)
