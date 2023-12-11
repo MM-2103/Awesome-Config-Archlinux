@@ -302,9 +302,10 @@ globalkeys = gears.table.join(
         {description = "go back", group = "client"}),
 
     -- Volume control
-    awful.key({}, "XF86AudioRaiseVolume", function() volumecfg:up() end),
-    awful.key({}, "XF86AudioLowerVolume", function() volumecfg:down() end),
-    awful.key({}, "XF86AudioMute",        function() volumecfg:toggle() end),
+      awful.key({}, "XF86AudioRaiseVolume", function() awful.spawn.with_shell("amixer sset 'Master' 5%+") end),
+      awful.key({}, "XF86AudioLowerVolume", function() awful.spawn.with_shell("amixer sset 'Master' 5%-") end),
+      awful.key({}, "XF86AudioMute",        function() volumecfg:toggle() end),
+
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
