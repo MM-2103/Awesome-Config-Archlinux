@@ -353,6 +353,12 @@ globalkeys = gears.table.join(
 	    awful.util.spawn("firefox") end,
               {description = "Launch FireFox", group = "applications"}),
 
+    -- Librewolf
+ awful.key({ modkey, "Shift" }, "b", function()
+	    awful.util.spawn("librewolf") end,
+              {description = "Launch Librewolf", group = "applications"}),
+
+
     -- ST terminal
  awful.key({ modkey }, "t", function()
 	    awful.util.spawn("st") end,
