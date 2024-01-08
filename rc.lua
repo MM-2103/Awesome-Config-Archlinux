@@ -304,7 +304,7 @@ globalkeys = gears.table.join(
     -- Volume control
       awful.key({}, "XF86AudioRaiseVolume", function() awful.spawn.with_shell("amixer sset 'Master' 5%+") end),
       awful.key({}, "XF86AudioLowerVolume", function() awful.spawn.with_shell("amixer sset 'Master' 5%-") end),
-      awful.key({}, "XF86AudioMute",        function() volumecfg:toggle() end),
+      awful.key({}, "XF86AudioMute", function() awful.spawn.with_shell("amixer sset 'Master' toggle") end),
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
@@ -648,9 +648,12 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 --- Auto start applications
 --
-awful.spawn.with_shell("thunderbird")
-
 awful.spawn.with_shell("~/.config/awesome/autostart.sh")
+awful.spawn.with_shell("thunderbird")
+awful.spawn.with_shell("nm-applet")
+awful.spawn.with_shell("nitrogen --restore")
+awful.spawn.with_shell("/usr/lib/mate-polkit/polkit-mate-authentication-agent-1")
+awful.spawn.with_shell("picom --config ~/.config/picom/picom.conf")
 
 -- Transparent background
 client.connect_signal("focus", function(c)
