@@ -18,6 +18,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 local battery_widget = require("battery-widget")
 local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
 local pacman_widget = require("awesome-wm-widgets.pacman-widget.pacman")
+--local media_player = require("plugins.media-player")
 -- local volume_widget = require('awesome-wm-widgets.pactl-widget.volume')
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
@@ -305,7 +306,9 @@ globalkeys = gears.table.join(
       awful.key({}, "XF86AudioRaiseVolume", function() awful.spawn.with_shell("amixer sset 'Master' 5%+") end),
       awful.key({}, "XF86AudioLowerVolume", function() awful.spawn.with_shell("amixer sset 'Master' 5%-") end),
       awful.key({}, "XF86AudioMute", function() awful.spawn.with_shell("amixer sset 'Master' toggle") end),
-
+      awful.key({}, "XF86AudioPlay", function() awful.spawn.with_shell("playerctl play-pause") end),
+      awful.key({}, "XF86AudioNext", function() awful.spawn.with_shell("playerctl next") end),
+      awful.key({}, "XF86AudioPrev", function() awful.spawn.with_shell("playerctl previous") end),
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
