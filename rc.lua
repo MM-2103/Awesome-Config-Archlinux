@@ -309,6 +309,9 @@ globalkeys = gears.table.join(
       awful.key({}, "XF86AudioPlay", function() awful.spawn.with_shell("playerctl play-pause") end),
       awful.key({}, "XF86AudioNext", function() awful.spawn.with_shell("playerctl next") end),
       awful.key({}, "XF86AudioPrev", function() awful.spawn.with_shell("playerctl previous") end),
+    -- Brightness control
+      awful.key({}, "XF86MonBrightnessUp", function () awful.spawn.with_shell("brightnessctl s +5%") end),
+      awful.key({}, "XF86MonBrightnessDown", function () awful.spawn.with_shell("brightnessctl s 5%-") end),
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
