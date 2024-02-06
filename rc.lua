@@ -313,6 +313,9 @@ globalkeys = gears.table.join(
     -- Brightness control
     awful.key({}, "XF86MonBrightnessUp", function() awful.spawn("brightnessctl s +5%") end),
     awful.key({}, "XF86MonBrightnessDown", function() awful.spawn("brightnessctl s 5%-") end),
+    -- Custom shortcuts
+    awful.key({}, "Print", function() awful.spawn("flameshot gui") end,
+        { description = "Take a screenshot", group = "launcher" }),
     -- Standard program
     awful.key({ modkey, }, "Return", function() awful.spawn(terminal) end,
         { description = "open a terminal", group = "launcher" }),
@@ -682,7 +685,9 @@ awful.spawn.with_shell("thunderbird")
 awful.spawn.with_shell("nm-applet")
 awful.spawn.with_shell("kdeconnect-indicator")
 awful.spawn.with_shell("nitrogen --restore")
+awful.spawn.with_shell("flameshot")
 awful.spawn.with_shell("/usr/lib/mate-polkit/polkit-mate-authentication-agent-1")
+awful.spawn.with_shell("xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock")
 awful.spawn.with_shell("picom --config ~/.config/picom/picom.conf")
 --
 -- Transparent background
