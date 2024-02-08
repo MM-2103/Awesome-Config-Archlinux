@@ -563,7 +563,7 @@ awful.rules.rules = {
     },
 
     {
-        rule = { instance = "thunderbird" },
+        rule = { class = "thunderbird" },
         properties = { tag = "9" }
     },
 
