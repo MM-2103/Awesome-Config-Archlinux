@@ -314,8 +314,8 @@ globalkeys = gears.table.join(
     awful.key({}, "XF86MonBrightnessUp", function() awful.spawn("brightnessctl s +5%") end),
     awful.key({}, "XF86MonBrightnessDown", function() awful.spawn("brightnessctl s 5%-") end),
     -- Custom shortcuts
-    awful.key({}, "Print", function() awful.spawn("flameshot gui") end,
-        { description = "Take a screenshot", group = "launcher" }),
+    awful.key({}, "Print", function() awful.spawn("flameshot gui") end),
+    awful.key({ modkey, "Shift" }, "x", function() awful.spawn("xset s activate") end),
     -- Standard program
     awful.key({ modkey, }, "Return", function() awful.spawn(terminal) end,
         { description = "open a terminal", group = "launcher" }),
