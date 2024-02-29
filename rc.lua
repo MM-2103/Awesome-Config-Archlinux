@@ -206,7 +206,7 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", opacity = 0.7, screen = s })
+    s.mywibox = awful.wibar({ position = "top", screen = s })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -687,19 +687,19 @@ awful.spawn.with_shell("kdeconnect-indicator")
 awful.spawn.with_shell("xfce4-clipman")
 awful.spawn.with_shell("nitrogen --restore")
 awful.spawn.with_shell("flameshot")
-awful.spawn.with_shell("/usr/lib/mate-polkit/polkit-mate-authentication-agent-1")
+-- awful.spawn.with_shell("/usr/lib/mate-polkit/polkit-mate-authentication-agent-1")
 awful.spawn.with_shell("xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock")
 awful.spawn.with_shell("picom --config ~/.config/picom/picom.conf")
 --
 -- Transparent background
-client.connect_signal("focus", function(c)
-    c.border_color = beautiful.border_focus
-    c.opacity = 1
-end)
-client.connect_signal("unfocus", function(c)
-    c.border_color = beautiful.border_normal
-    c.opacity = 0.9
-end)
+-- client.connect_signal("focus", function(c)
+--     c.border_color = beautiful.border_focus
+--     c.opacity = 1
+-- end)
+-- client.connect_signal("unfocus", function(c)
+--     c.border_color = beautiful.border_normal
+--     c.opacity = 0.9
+-- end)
 
 --local playerctl_widget = media_player({
 --    icons = {
