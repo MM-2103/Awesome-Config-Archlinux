@@ -304,9 +304,9 @@ globalkeys = gears.table.join(
         { description = "go back", group = "client" }),
 
     -- Volume control
-    awful.key({}, "XF86AudioRaiseVolume", function() awful.spawn("amixer sset 'Master' 5%+") end),
-    awful.key({}, "XF86AudioLowerVolume", function() awful.spawn("amixer sset 'Master' 5%-") end),
-    awful.key({}, "XF86AudioMute", function() awful.spawn("amixer sset 'Master' toggle") end),
+    awful.key({}, "XF86AudioRaiseVolume", function() awful.spawn("pamixer -i 5") end),
+    awful.key({}, "XF86AudioLowerVolume", function() awful.spawn("pamixer -d 5") end),
+    awful.key({}, "XF86AudioMute", function() awful.spawn("pamixer -t") end),
     awful.key({}, "XF86AudioPlay", function() awful.spawn("playerctl play-pause") end),
     awful.key({}, "XF86AudioNext", function() awful.spawn("playerctl next") end),
     awful.key({}, "XF86AudioPrev", function() awful.spawn("playerctl previous") end),
@@ -413,6 +413,12 @@ globalkeys = gears.table.join(
         { description = "Launch steam", group = "applications" }),
 
 
+    -- Volume manager
+    awful.key({ modkey }, "p", function()
+            awful.util.spawn("pavucontrol")
+        end,
+        { description = "Launch pavucontrol", group = "applications" }),
+
 
     awful.key({ modkey }, "x",
         function()
@@ -425,7 +431,7 @@ globalkeys = gears.table.join(
         end,
         { description = "lua execute prompt", group = "awesome" }),
     -- Prompt
-    awful.key({ modkey }, "p", function() awful.screen.focused().mypromptbox:run() end,
+    awful.key({ modkey, "Shift" }, "p", function() awful.screen.focused().mypromptbox:run() end,
         { description = "run prompt", group = "launcher" })
 )
 
