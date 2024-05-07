@@ -328,6 +328,10 @@ globalkeys = gears.table.join(
 	awful.key({ modkey, "Shift" }, "x", function()
 		awful.spawn("xset s activate")
 	end),
+	awful.key({ modkey }, "g", function()
+		myscreen = awful.screen.focused()
+		myscreen.mywibox.visible = not myscreen.mywibox.visible
+	end, { description = "toggle statusbar" }),
 	-- Standard program
 	awful.key({ modkey }, "Return", function()
 		awful.spawn(terminal)
