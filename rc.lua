@@ -332,6 +332,11 @@ globalkeys = gears.table.join(
 		myscreen = awful.screen.focused()
 		myscreen.mywibox.visible = not myscreen.mywibox.visible
 	end, { description = "toggle statusbar" }),
+	-- working toggle titlebar
+	awful.key({ modkey, "Control" }, "y", function(c)
+		awful.titlebar.toggle(c)
+	end, { description = "Show/Hide Titlebars", group = "client" }),
+
 	-- Standard program
 	awful.key({ modkey }, "Return", function()
 		awful.spawn(terminal)
@@ -385,11 +390,6 @@ globalkeys = gears.table.join(
 	awful.key({ modkey, "Shift" }, "b", function()
 		awful.util.spawn("librewolf")
 	end, { description = "Launch Librewolf", group = "applications" }),
-
-	-- ST terminal
-	awful.key({ modkey }, "t", function()
-		awful.util.spawn("st")
-	end, { description = "Launch ST terminal", group = "applications" }),
 
 	-- VsCodium
 	awful.key({ modkey }, "c", function()

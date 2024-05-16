@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 autorandr -c
 xfce4-clipman &
+thunderbird &
 nm-applet &
 /usr/lib/mate-polkit/polkit-mate-authentication-agent-1 &
 kdeconnect-indicator &
