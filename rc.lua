@@ -43,7 +43,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("~/.config/awesome/gtk/theme.lua")
+beautiful.init("~/.config/awesome/xresources/theme.lua")
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
 editor = os.getenv("EDITOR") or "nvim"
@@ -316,10 +316,10 @@ globalkeys = gears.table.join(
 	end),
 	-- Brightness control
 	awful.key({}, "XF86MonBrightnessUp", function()
-		awful.spawn("brightnessctl s +5%")
+		awful.spawn("brightnessctl s +10%")
 	end),
 	awful.key({}, "XF86MonBrightnessDown", function()
-		awful.spawn("brightnessctl s 5%-")
+		awful.spawn("brightnessctl s 10%-")
 	end),
 	-- Custom shortcuts
 	awful.key({}, "Print", function()
@@ -589,6 +589,43 @@ awful.rules.rules = {
 		properties = { floating = true },
 	},
 
+	-- General plasma rules --
+	{
+		rule_any = {
+			class = {
+				"plasmashell",
+				"ksmserver-logout-greeter",
+			},
+		},
+		properties = {
+			floating = true,
+			border_width = 0,
+			titlebars = false, -- custom property to control titlebars
+		},
+	},
+
+	{ -- KDE apps
+		rule_any = {
+			class = {
+				"spectacle",
+				"krunner",
+			},
+		},
+		properties = {
+			floating = true,
+		},
+	},
+
+	{
+		rule_any = {
+			name = {
+				"Desktop.*Plasma",
+			},
+		},
+	},
+
+	-- End General plasma rules --
+
 	-- Add titlebars to normal clients and dialogs
 	{
 		rule_any = { type = { "normal", "dialog" } },
@@ -612,6 +649,35 @@ client.connect_signal("manage", function(c)
 		-- Prevent clients from being unreachable after screen count changes.
 		awful.placement.no_offscreen(c)
 	end
+
+	-- Plasma stuff --
+	if
+		c.type == "dock" -- Plasma Panel
+		or c.type == "desktop"
+	then -- Plasma Desktop
+		c.focusable = false
+		c:tags(c.screen.tags) -- show on all tags from this screen.
+	end
+
+	-- Show titlebars only if enabled.
+	if c.titlebars then
+		awful.titlebar.show(c)
+	else
+		awful.titlebar.hide(c)
+	end
+
+	-- Place floating windows. Plasma widgets provide this info
+	if c.floating then
+		if c.size_hints.user_position then
+			c.x = c.size_hints.user_position.x
+			c.y = c.size_hints.user_position.y
+		end
+		if c.size_hints.user_size then
+			c.width = c.size_hints.user_size.width
+			c.height = c.size_hints.user_size.height
+		end
+	end
+	-- End Plasma stuff --
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
