@@ -377,24 +377,19 @@ globalkeys = gears.table.join(
 	end, { description = "restore minimized", group = "client" }),
 
 	-- Rofi
-	awful.key({ modkey }, "r", function()
+	awful.key({ modkey }, "d", function()
 		awful.util.spawn("rofi -show drun")
 	end, { description = "run rofi", group = "launcher" }),
 
-	-- FireFox
+	-- Floorp
 	awful.key({ modkey }, "b", function()
-		awful.util.spawn("firefox")
+		awful.util.spawn("floorp")
 	end, { description = "Launch FireFox", group = "applications" }),
 
 	-- Librewolf
 	awful.key({ modkey, "Shift" }, "b", function()
 		awful.util.spawn("librewolf")
 	end, { description = "Launch Librewolf", group = "applications" }),
-
-	-- VsCodium
-	awful.key({ modkey }, "c", function()
-		awful.util.spawn("codium")
-	end, { description = "Launch VsCodium", group = "applications" }),
 
 	-- Emacs
 	awful.key({ modkey }, "e", function()
@@ -430,7 +425,7 @@ clientkeys = gears.table.join(
 		c.fullscreen = not c.fullscreen
 		c:raise()
 	end, { description = "toggle fullscreen", group = "client" }),
-	awful.key({ modkey }, "w", function(c)
+	awful.key({ modkey, "Shift" }, "c", function(c)
 		c:kill()
 	end, { description = "close", group = "client" }),
 	awful.key(
@@ -732,35 +727,6 @@ client.connect_signal("unfocus", function(c)
 	c.border_color = beautiful.border_normal
 end)
 -- }}}
+
 --- Auto start applications
 awful.spawn.with_shell("~/.config/awesome/autostart.sh")
--- awful.spawn.with_shell("autorandr -c")
--- awful.spawn.with_shell("thunderbird")
--- -- awful.spawn.with_shell("nm-applet")
--- awful.spawn.with_shell("kdeconnect-indicator &")
--- awful.spawn.with_shell("xfce4-clipman &")
--- -- awful.spawn.with_shell("nitrogen --restore")
--- awful.spawn.with_shell("/usr/lib/mate-polkit/polkit-mate-authentication-agent-1 &")
--- awful.spawn.with_shell("xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &")
--- awful.spawn.with_shell("picom --config ~/.config/picom/picom.conf &")
--- awful.spawn.with_shell("feh --bg-scale ~/Pictures/Wallpaper/berserk-forest.jpg")
---
--- Transparent background
--- client.connect_signal("focus", function(c)
---     c.border_color = beautiful.border_focus
---     c.opacity = 1
--- end)
--- client.connect_signal("unfocus", function(c)
---     c.border_color = beautiful.border_normal
---     c.opacity = 0.9
--- end)
-
---local playerctl_widget = media_player({
---    icons = {
---        play = theme.play,
---        pause = theme.pause
---    },
---    font = theme.font,
---    name = "playerctl",
---    refresh_rate = 0.3
---}).widget
